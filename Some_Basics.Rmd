@@ -1,3 +1,5 @@
+# This is an R Markdown file, BUT the completed functions aren't displaying because I'd need to push
+# the HTML generated file for that ... I REALLY need to learn how to use GIT!
 ---
 title: "Some_Basics"
 author: "David_Halvorsen"
