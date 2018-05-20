@@ -1,0 +1,156 @@
+
+R Cookbook Chapter 5 Data Structures
+```{r}
+# Vectors can have a "names" property
+v <- c(10, 20, 30)
+names(v) <- c("Moe", "Larry", "Curly")
+print(v)
+```
+```{r}
+# select vector by name
+v["Larry"]
+```
+
+```{r}
+# scalars and vectors are treated the same, BUT scalars are vectors with only 1 element
+length(pi)
+pi[1]
+pi[2]
+```
+```{r}
+# In R a matrix is a vector that has dimension
+A <- 1:6
+dim(A)
+print(A)
+```
+
+```{r}
+dim(A) <- c(2,3)
+print(A)
+```
+
+```{r}
+B <- list(1,2,3,4,5,6)
+dim(B)
+```
+
+```{r}
+dim(B) <- c(2,3)
+print(B)
+```
+
+```{r}
+D <- 1:12
+dim(D) <- c(2,3,2)
+print(D)
+```
+
+```{r}
+# You ~could~ create a matrix with letters and numbers, BUT it is not advised
+C <- list(1, 2, 3, "X", "Y", "Z")
+dim(C) <- c(2,3)
+print(C)
+```
+
+```{r}
+# How to append data to a vector
+v <- c(v,newItems)
+# single element extension
+v[length(v)+1]<- newItem
+v <-c(1,2,3)
+v<- c(v,4)
+v
+```
+
+```{r}
+# R will extend your vector, with NA, if you specify a new length
+v <- c(1,2,3)
+v[10] <- 10
+v
+```
+
+```{r}
+# The append function inserts data into a vector
+# it uses 'after' to find the point to add the new data
+#append(vec, newvalues, after=n)
+# this'll add '99' after 5
+append(1:10, 99, after=5)
+# or after 0
+append(1:10, 99, after=0)
+```
+
+```{r}
+# recycling rule
+# these are different lengths, so R will recyle 1:3 for addition
+(1:6) + (1:3)
+
+# vector recycling for functions works too
+cbind(1:6, 1:3)
+
+```
+
+```{r}
+# Factor is R's term for categorical variable
+# v is a vector of strings or integers in this example
+# f <- factor(v)
+# If there is only a subset of potential values, use levels for the factors
+# f <- factor(v, levels)
+
+```
+
+```{r}
+# building a stacked list example code
+comb <- stack(list(v1=v1, v2=v2, v3=v3)) # combine three vectors
+# actual
+comb <- stack(list(fresh=freshmen, soph=sophomores, jrs=juniors))
+print(comb)
+# that data arrangement is required for common statistical techniques, like ANOVA
+```
+
+```{r}
+# create a list
+lst <- list(x, y, z)
+lst
+```
+
+```{r}
+# 'mongrel' list of different data types
+lst <- list(3.14, "Moe", c(1,1,2,3), mean)
+lst
+# Alternatively, you could create an empty list and build from there
+lst <- list()
+lst[[1]] <- 3.14
+lst[[2]] <- "Moe"
+lst
+```
+
+```{r}
+# selecting list elements by name
+lst[["name"]] # selects the list element called "name"
+lst$name # works the same as above
+lst[c(name1,name2,name3)] # returns a subset of the total list with individual items
+```
+
+```{r}
+# how to remove null elements from a list
+lst[sapply(lst, is.null)] <- NULL
+```
+
+```{r}
+# This code will make a vector into a 2 x 3 grid
+vec <- c(1, 2, 3)
+matrix(vec, 2, 3)
+```
+
+```{r}
+# This code is supposed to subset the Cars93 dataset, but it's not working ...
+library(MASS)
+data(Cars93)
+attach(Cars93)
+subset(Cars93, select=Model, subset=(MGP.city > 30))
+```
+
+
+
+
+
