@@ -1,0 +1,96 @@
+---
+title: "Strings_and_Dates"
+author: "David Halvorsen"
+date: "May 21, 2018"
+output: html_document
+---
+
+```{r}
+# reading files and printing reports requires using strings and dates
+# Date class can represent a calendar date, but not a clock time 
+# POSIXct is a datetime class and can represent a moment in time with an 
+# accuracy of one second. It's stored as the # of seconds since January 1, 1970
+# POSIX1t is a much larger representation (nine-element list).
+```
+
+```{r}
+# Getting the length of a string
+# > nchar("Moe")
+# 3
+# > nchar("Curly")
+# 5
+# applying nchar to a vector of strings:
+s <- c("Moe", "Larry", "Curly")
+nchar(s)
+# The length function does not return the length of a string; it returns the length of a vector
+length("Moe")
+length(c("Moe", "Larry", "Curly"))
+```
+
+```{r}
+# Joining together two or more strings is done with the paste function
+paste("Everbody", "loves", "stats.")
+# single space between words by default. Here's how to change that:
+paste("Everybody", "loves", "stats.", sep="-")
+```
+
+```{r}
+# you can print text AND values
+paste("The square root of twice pi is approximately", sqrt(2*pi))
+```
+
+```{r}
+# substring lets you subset a string
+substr("Statistics", 1, 4) # Extract first 4 characters
+substr("Statistics", 7, 10) # Extract last 4 characters
+```
+
+```{r}
+# You can split on forward slashes
+path <- getwd()
+strsplit(path, "/")
+```
+
+```{r}
+# sub function will replace the first instance of a sub-string with a given string
+s <- "Curly is the smart one. Curly is funny too."
+sub("Curly", "Moe", s)
+# gsub does the same thing for ALL instances of a substring
+gsub("Curly", "Moe", s)
+```
+
+```{r}
+# generating the matrix of all possible text combinations
+locations <- c("NY", "LA", "CHI", "HOU")
+treatments <- c("T1", "T2", "T3")
+outer(locations, treatments, paste, sep='-')
+# You can apply a set with itself if order does not matter
+outer(treatments, treatments, paste, sep="-")
+```
+
+```{r}
+# returns the current date
+Sys.Date()
+# it returns a date class
+class(Sys.Date())
+```
+
+```{r}
+as.Date("2010-12-31")
+# This doesn't work with the American date format
+as.Date("12/31/2010")
+# it needs some playing to work with American date formats
+as.Date("12/31/2010", format="%m/%d/%Y")
+```
+
+```{r}
+ # printing the date
+format(Sys.Date())
+as.character(Sys.Date())
+```
+
+```{r}
+# ISOdate(year, month, day) can combine date items into a POSIXct object
+as.Date(ISOdate(2012, 2, 29))
+
+```
