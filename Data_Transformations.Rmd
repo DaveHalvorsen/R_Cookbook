@@ -1,0 +1,153 @@
+---
+title: "Ch5_Data_Transformations"
+author: "David_Halvorsen"
+date: "May 19, 2018"
+output: html_document
+---
+```{r}
+v <- c(40,2,83,28,58)
+f <- factor(c("A", "C", "C", "B", "C"))
+setNames(v, f)
+```
+
+```{r}
+# splitting a vector into groups
+groups <- split(v, f)
+# or this way
+groups <- unstack(data.frame(v,f))
+
+```
+
+```{r}
+# Cars93 dataset contains a factor named origin with two levels
+# This splits the MPG data
+library(MASS)
+split(Cars93$MPG.city, Cars93$Origin)
+
+```
+
+```{r}
+# now we can compute the median for the different groups
+g <- split(Cars93$MPG.city, Cars93$Origin)
+median(g[[1]])
+median(g[[2]])
+```
+
+```{r}
+# @FUTURE_DAVE: we are currently starting section 6.2 on page 149 #kisses
+```
+
+```{r}
+# apply a function to each element of the list with either lapply or sapply
+# lapply returns the results in a list
+# sapply returns the results in a vector (if that is possible)
+# lst <- lapply(lst, fun)
+# vec <- sapply(lst, fun)
+```
+
+```{r}
+# This example is of a statistics teacher with a set # of students that drop out over time
+# over four semesters
+# S1, S2, S3, S4 are the four different semesters
+# lapply will return a list
+# lapply(scores, length)
+# S1 36
+# S2 39
+# S3 38
+# S4 36
+# sapply will return a matrix
+# sapply(scores, length)
+# S1 S2 S3 S4
+# 36 39 38 S6
+# sapply will turn a vector into a list
+# if the function returns a list, you need to use lapply
+# if you wanted to run a t-test on every semester, you'd need
+# to use lapply (becaquse t-test returns a list)
+# test <- lapply(scores, t.test)
+```
+
+```{r}
+# the apply function lets you apply a function to every row
+# set the second argument of apply to 1 to indicate row-by-row function application
+# results <- apply(mat, 1, fun) # mat is matrix; fun is function
+# apply function will call fun once for each row and assemble the returned values into a vector
+# imagine you've got long (longitudinal data)
+# structred like:
+#       trial 1   trial 2   trial 3   trial 4   trial 5
+# Moe
+# Larry
+# Curly
+# you could calculate the average observation for each subject by applying the mean function 
+# to the rows, like this:
+# apply(long, 1, mean) # apply uses row names from the matrix to identify elements of resulting vector
+# The function will return a vector or a scalar. For this application it makes a matrix
+# apply can be used on dataframes IF the dataframe is homogenous (all numbers or all character strings)
+```
+
+```{r}
+# applying a function to every column of a matrix
+# use the apply function, but set the second argument to 2 (column setting)
+# results <- apply(mat, 2, fun)
+# a dataframe can be run through the lapply or sapply functions
+# lapply assembles the return values into a list. 
+# sapply assembles them into a vector
+# lst <- lapply(dfrm, fun)
+# vec <- sapply(dfrm, fun)
+# we speak of matrixes in terms of rows and columns, so 1 is row and 2 is column
+```
+
+```{r}
+# you want to process a data set in groups ... how?
+# create a grouping factor (of the same length as your vector) THEN use the tapply function:
+# tapply(x, f, fun)
+# x is a vector, f is a grouping factor, and fun is a function
+# hypothetical: have a vector with populations of 16 largest cities in Chicago from data frame called suburbs
+# > attach(suburbs)
+# > pop
+# values here
+# Then it's easy to run calculations on it:
+# > sum(pop)
+# > mean(pop)
+```
+
+```{r}
+# Applying a Function to Groups of Rows
+# first identify a grouping factor (factor with one level (element) for every row of data frame)
+# The by function puts the rows into a temporary data frame and calls your function with that argument
+# The by function collects the returned values into a list and returns the list
+# by(dfrm, fact, fun)
+```
+
+```{r}
+# Suppose that you have a function that takes multiple arguments
+# You want to apply that function element-wise to vectors to obtain a vector results, BUT
+# You have a function that is not vectorized (it works on scalars, but not vectors)
+# You can use the mapply function to your arguments element-wise
+# > mapply(f, vec1, vec2, ..., vecn)
+# There must be one vector for each argument expected by f BECAUSE the recycling rule will be applied 
+# for mis-matched lengths
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
