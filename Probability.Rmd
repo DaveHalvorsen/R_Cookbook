@@ -1,0 +1,101 @@
+---
+title: "Probability"
+author: "David_Halvorsen"
+date: "May 22, 2018"
+output: html_document
+---
+
+```{r}
+# calculate the number of combinations of n items taken k at a time
+# choose(n, k)
+# is this formula: n!/r!(n-r!)
+choose(10, 3)
+choose(50, 3)
+```
+
+```{r}
+# generate all combinations of n items taken k at a time
+# combn(items, k)
+combn(1:5, 3)
+# it doesn't just have to be with numbers
+combn(c("T1", "T2", "T3", "T4", "T5"), 3)
+```
+
+```{r}
+# simple case generates a random number between 1 and 0
+runif(1)
+# You can generate many at a time:
+runif(10)
+```
+```{r}
+# R can create a variety of random distributions with the command r followed by the distribution type:
+rnorm(1)
+```
+```{r}
+# You can set a seed state for your random number to a known starting state:
+set.seed(666)
+runif(10)
+# The same 'random' number set is genrated each time because the seed was the same
+set.seed(666)
+runif(10)
+```
+```{r}
+# The sample function will select n items from a vector
+# > sample(vec, n)
+# > sample(world.series$year, 10)
+# medians <- numeric(1000)
+# for (i in 1:1000) {
+#   medians[i] <- median(sample(x, replace=TRUE))
+# }
+```
+```{r}
+sample(c("H", "T"), 10, replace=TRUE)
+# You can alter the probabilities of events:
+sample(c("Heads", "Tails"), 20, replace=TRUE, prob=c(0.2,0.8))
+```
+```{r}
+# Density function
+dbinom(7, size=10, prob=0.5)
+# distribution function
+pbinom(7, size=10, prob=0.5)
+# survival function
+pbinom(7, size=10, prob=0.5, lower.tail=FALSE)
+```
+
+```{r}
+# you can calculate the probability of X between the limits x1 and x2 by subtraction
+pbinom(7,size=10,prob=0.5) - pbinom(3,size=10,prob=0.5)
+# you can ask for a vector of the corresponding probabilities
+pbinom(c(3,7), size=10, prob=0.5)
+```
+
+```{r}
+# get probability that a man is shorter than 66 inches  assuming that 
+# heights are normally distributed with a mean of 70 inches and a standard deviaiton of 3 inches
+pnorm(66, mean=70, sd=3)
+```
+```{r}
+# converting probabilities to quantiles
+qnorm(0.05, mean=100, sd=15)
+```
+
+```{r}
+# a probability distribution
+x <- seq(from=-3, to=+3, length.out=100)
+plot(x, dnorm(x))
+```
+
+```{r}
+x <- seq(from=0, to=6, length.out=100) # Define the density domains
+ylim <- c(0, 0.6)
+
+par(mfrow=c(2,2))                      # Create a 2x2 plotting area
+plot(x, dunif(x,min=2,max=4), main="Uniform",
+     type='l', ylim=ylim)              # Plot a uniform density
+plot(x, dnorm(x,mean=3,sd=1), main="Normal",
+     type='l', ylim=ylim)              # Plot a normal density
+plot(x, dexp(x,rate=1/2), main="Exponential",
+     type='l', ylim=ylim)              # Plot exponential density
+plot(x, dgamma(x,shape=2,rate=1), main="Gamma",
+     type='l', ylim=ylim)              # Plot a gamma density
+```
