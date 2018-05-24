@@ -1,0 +1,185 @@
+---
+title: "General_Statistics"
+author: "David_Halvorsen"
+date: "May 22, 2018"
+output: html_document
+---
+
+```{r}
+# The null hypothesis is that nothing happened. That your treatment's mean was no different than the control's. 
+# The opposite is the alternative hypothesis. That your treatment worked. 
+# Steps
+# 1. assume the null hypothesis is true
+# 2. Calculate a test statistic. 
+# 3. From the statistic and its distribution we can calculate a p-value, the probability of a test statistic 
+# value as extreme or more extreme than the one we observed, WHILE assuming that the null hypothesis is true.
+# 4. If the p-value is too small, we have strong evidence against the null hypothesis (rejecting the null hypothesis)
+# 5. If the p-value is NOT small, then we have no reason to reject the null hypothesis. That is called failing 
+# to reject the null hypothesis.
+```
+
+```{r}
+# I'll play with the AirPassengers dataset
+AirPassengers
+table(AirPassengers)
+# The summary function gives useful statistics for vectors, matrices, factors, and data frames:
+summary(AirPassengers)
+```
+```{r}
+# two-column data frame will go scatter plot right away
+plot(cars)
+```
+```{r}
+# cars dataset with title and better labels
+plot(cars,
+     main="cars: Speed vs. Stopping Distance (1920)",
+     xlab="Speed (MPG)",
+     ylab="Stopping Distance (ft)")
+```
+
+```{r}
+# cars dataset with title and better labels
+plot(cars,
+     main="cars: Speed vs. Stopping Distance (1920)",
+     xlab="Speed (MPG)",
+     ylab="Stopping Distance (ft)",
+     typ="n")
+grid()
+points(cars)
+```
+
+```{r}
+# the iris dataset is about multiple species, so this plot isn't helpful
+with(iris, plot(Petal.Length, Petal.Width))
+```
+```{r}
+# draw each species group with different symbols
+with(iris, plot(Petal.Length, Petal.Width, pch=as.integer(Species)))
+# this adds a figure legend for species type
+legend(1.5, 2.4, c("setosa", "versicolor", "virginica"), pch=1:3)
+```
+```{r}
+install.packages('faraway')
+library(faraway)
+data(strongx)
+m <- lm(crossx ~ energy, data=strongx)
+abline(m)
+```
+
+```{r}
+# four numeric variables and one categorical variable
+head(iris)
+```
+
+```{r}
+plot(iris[,1:4])
+```
+
+```{r}
+data(Cars93, package="MASS")
+coplot(Horsepower ~ MPG.city | Origin, data=Cars93)
+```
+
+```{r}
+# barplot function creates a simple barplot
+heights <- tapply(airquality$Temp, airquality$Month, mean)
+barplot(heights)
+```
+
+```{r}
+# You can add more details to a bar chart
+barplot(heights,
+        main="Mean Temp. by Month",
+        names.arg=c("May", "Jun", "Jul", "Aug", "Sep"),
+        ylab="Temp (deg. F)")
+```
+
+```{r}
+attach(airquality)
+heights <- tapply(Temp, Month, mean)
+lower <- tapply(Temp, Month, function(v) t.test(v)$conf.int[1])
+upper <- tapply(Temp, Month, function(v) t.test(v)$conf.int[2])
+barplot2(heights, plot.ci=TRUE, ci.l=lower, ci.u=upper)
+```
+
+```{r}
+barplot2(heights, plot.ci=TRUE, ci.l=lower, ci.u=upper,
+         ylim=c(50,90), xpd=FALSE,
+         main="Mean Temp. By Month",
+         names.arg=c("May", "Jun", "Jul", "Aug", "Sep"),
+         ylab="Temp (dec. F)")
+```
+
+```{r}
+# 
+barplot(c(3,5,4), col=c("red", "white", "blue"))
+```
+
+```{r}
+rel.hts <- rank(heights) / length(heights)
+grays <- gray(1 - rel.hts)
+barplot(heights, col=grays)
+```
+
+```{r}
+rel.hts <- (heights - min(heights)) / (max(heights) - min(heights))
+grays <- gray(1 - rel.hts)
+barplot(heights,
+        col = grays,
+        ylim=c(50, 90), xpd=FALSE,
+        main="Mean Temp. by Month",
+        names.arg=c("May", "Jun", "Jul", "Aug", "Sep"),
+        ylab="Temp (deg. F)")
+```
+
+```{r}
+data(UScereal, package="MASS")
+boxplot(sugars ~ shelf, data=UScereal,
+        main="Sugar Content by Shelf",
+        xlab="Shelf", ylab="sugar (grams per portion)")
+```
+
+```{r}
+data(Cars93, package="MASS")
+hist(Cars93$MPG.city, 20)
+```
+
+```{r}
+hist(Cars93$MPG.city, 20, main="City MPG (1993)", xlab="MPG")
+```
+
+```{r}
+samp <- rgamma(500, 2, 2)
+hist(samp, 20, prob=T)
+lines(density(samp))
+```
+
+```{r}
+data(Cars93, package="MASS")
+qqnorm(Cars93$Price, main="Q-Q Plot: Price")
+qqline(Cars93$Price)
+```
+
+```{r}
+data(Cars93, package="MASS")
+qqnorm(log(Cars93$Price), main="Q-Q Plot: log(Price)")
+qqline(log(Cars93$Price))
+```
+
+```{r}
+curve(sin, -3, +3) # gRAPH THE SINE FUNCTION FROM -3 TO +3
+```
+
+```{r}
+curve(dnorm, -3.5, +3.5,
+      main="Std. Normal DEnsity")
+```
+
+
+
+
+
+
+
+
+
